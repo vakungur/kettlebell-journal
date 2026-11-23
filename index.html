@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#141714">
+  <title>Тренировочный цикл с гирей</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="layout">
+    <header class="hero">
+      <h1>Тренировочный<br> цикл с гирей</h1>
+      <nav aria-label="Разделы журнала">
+        <div class="days">
+          <button type="button" data-view="День 1">День 1</button>
+          <button type="button" data-view="День 2">День 2</button>
+          <button type="button" data-view="День 3">День 3</button>
+        </div>
+        <div class="tools">
+          <button type="button" data-view="stats">Статистика</button>
+          <button type="button" data-view="backup">Экспорт / импорт</button>
+        </div>
+      </nav>
+    </header>
+
+    <section id="workout" aria-labelledby="day-title">
+      <div class="section-head">
+        <h2 id="day-title"></h2>
+        <span id="completion" class="muted"></span>
+      </div>
+      <form id="training">
+        <div id="groups"></div>
+        <div class="save-bar">
+          <button class="primary" type="submit">Сохранить тренировку</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="stats" aria-labelledby="stats-title" hidden>
+      <h2 id="stats-title">Статистика</h2>
+      <div id="summary" class="summary"></div>
+      <div class="section-head">
+        <h3>История</h3>
+        <select id="filter" aria-label="Фильтр по дню">
+          <option value="">Все дни</option>
+          <option>День 1</option><option>День 2</option><option>День 3</option>
+        </select>
+      </div>
+      <div id="history"></div>
+    </section>
+
+    <section id="backup" aria-labelledby="backup-title" hidden>
+      <h2 id="backup-title">Экспорт / импорт</h2>
+      <div class="panel">
+        <h3>Резервная копия</h3>
+        <p>История хранится в этом браузере. Скачай JSON, чтобы перенести записи на другое устройство.</p>
+        <button id="export" type="button">Скачать JSON</button>
+      </div>
+      <form id="import" class="panel">
+        <h3>Импорт истории</h3>
+        <label>Файл JSON<input type="file" id="file" accept=".json,application/json" required></label>
+        <label>Режим импорта
+          <select id="mode">
+            <option value="merge">Объединить с текущими</option>
+            <option value="replace">Заменить данные</option>
+          </select>
+        </label>
+        <p id="import-hint" class="muted"></p>
+        <button class="primary" type="submit">Импортировать</button>
+      </form>
+      <div class="panel">
+        <h3>Сброс истории</h3>
+        <button id="reset" class="danger" type="button">Удалить все тренировки</button>
+      </div>
+    </section>
+
+    <p id="notice" class="notice" role="status" aria-live="polite"></p>
+    <noscript>Для работы журнала включи JavaScript.</noscript>
+  </main>
+
+  <template id="exercise">
+    <details class="exercise">
+      <summary><span class="exercise-name"></span><span class="target"></span></summary>
+      <div class="fields">
+        <label data-gear="kettlebell">Гиря, кг<input name="kettlebellWeight" type="number" min="0" step="any" inputmode="decimal"></label>
+        <label data-gear="vest">Жилет, кг<input name="vestWeight" type="number" min="0" step="any" inputmode="decimal"></label>
+        <label>Подходы<input name="setsDone" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label>Повторы<input name="repsDone" type="text" maxlength="160" placeholder="15, 15, 15"></label>
+        <label>Сложность (RPE) 1–10<input name="rpe" type="number" min="1" max="10" step="1" inputmode="numeric"></label>
+        <label class="check"><input name="completed" type="checkbox"> Выполнено</label>
+        <label class="wide">Комментарий<textarea name="comment" rows="2" maxlength="2000"></textarea></label>
+      </div>
+    </details>
+  </template>
+</body>
+</html>
